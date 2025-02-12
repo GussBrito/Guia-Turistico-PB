@@ -1,5 +1,5 @@
 body{
-   background-image: url(JoãoPessoa.jpg);
+   background-image: url(fundo-site.jpg);
    background-size: cover;
    background-repeat: no-repeat;/*evita a repetição da imagem*/
    background-position: center;
@@ -14,7 +14,7 @@ body{
    color: rgb(0, 0, 0);
 }
 footer{
-   background-color: rgb(115, 115, 115);/*cor de fundo*/
+   background-color: rgba(124, 124, 124, 0.7);/*cor de fundo*/
    color: aliceblue;/*cor do texto*/
    padding: 20px 0; /*espaço superior e inferior*/
    text-align: center;
