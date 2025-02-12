@@ -15,17 +15,37 @@
         <button id="botaoADD">Adicionar local</button>
     </div>
 
+    <main id="listaLocais"></main>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitulo">Adicionar Local</h2>
+            <form id="formLocal">
+                <input type="hidden" id="localId">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" required>
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" required></textarea>
+                <label for="foto">URL da Foto:</label>
+                <input type="text" id="foto" required>
+                <button type="submit" id="salvarLocal">Salvar</button>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-conteudo">
             <p> © 2025 desenvolvido por Gustavo Brito. Todos os direitos reservados</p>
             <nav>
                 <ul>
-                    <li><a href="#">contatos</a></li>
+                    <li><a href="https://github.com/GussBrito">contatos</a></li>
                 </ul>
             </nav>
         </div>
     </footer>
+
+    
     <script src="script.js"></script>
 </body>
 
