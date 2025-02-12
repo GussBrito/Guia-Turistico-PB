@@ -24,7 +24,7 @@ A aplicação foi construída utilizando as tecnologias:
 ## Como Usar
 1. Clone este repositório:
     ```bash
-    git clone https://github.com/seu-usuario/nome-do-repositorio.git
+    https://github.com/GussBrito/Roteiro-6-LSW-.git
     ```
 2. Abra o arquivo `index.html` em seu navegador para visualizar o site.
 3. Para executar a aplicação localmente e testar a API, você pode utilizar o **JSON Server**:
