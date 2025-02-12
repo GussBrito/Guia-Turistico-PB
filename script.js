@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('botaoADD').addEventListener('click', abrirModal);
     document.querySelector('.close').addEventListener('click', fecharModal);
     document.getElementById('formLocal').addEventListener('submit', salvarLocal);
+    document.getElementById('confirmarExclusao').addEventListener('click', confirmarExclusao); // Confirmação de exclusão
+    document.querySelector('.fechar-modal-exclusao').addEventListener('click', fecharModalExclusao); // Fechar modal de exclusão
 });
 
 function abrirModal() {
@@ -41,10 +43,23 @@ function exibirLocais(locais) {
             <h2>${local.titulo}</h2>
             <p>${local.descricao}</p>
             <img src="${local.foto}" alt="Imagem de ${local.titulo}" width="200">
-            <button onclick="editarLocal(${local.id})">Editar</button>
-            <button onclick="excluirLocal(${local.id})">Excluir</button>
+            <button class="editar" data-id="${local.id}">Editar</button>
+            <button class="excluir" data-id="${local.id}">Excluir</button>
         `;
         container.appendChild(div);
+    });
+
+    document.querySelectorAll('.editar').forEach(button => {
+        button.addEventListener('click', function() {
+            editarLocal(this.getAttribute('data-id'));
+        });
+    });
+
+    document.querySelectorAll('.excluir').forEach(button => {
+        button.addEventListener('click', function() {
+            const local = locais.find(l => l.id == this.getAttribute('data-id'));
+            abrirModalExclusao(local.id, local.titulo);
+        });
     });
 }
 
@@ -81,58 +96,32 @@ async function salvarLocal(event) {
     }
 }
 
-async function excluirLocal(id) {
-    if (!confirm('Tem certeza que deseja excluir este local?')) return;
-    
-    try {
-        await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
-        carregarLocais();
-    } catch (erro) {
-        console.error('Erro ao excluir local:', erro);
+// Função para abrir o modal de exclusão
+let localIdParaExcluir = null;
+function abrirModalExclusao(id, titulo) {
+    localIdParaExcluir = id;
+    document.getElementById('descricaoExclusao').innerText = titulo;
+    document.getElementById('modalExclusao').style.display = 'flex';
+}
+
+// Fechar modal de exclusão
+function fecharModalExclusao() {
+    document.getElementById('modalExclusao').style.display = 'none';
+}
+
+// Confirmação de exclusão
+async function confirmarExclusao() {
+    if (localIdParaExcluir) {
+        try {
+            await fetch(`${apiUrl}/${localIdParaExcluir}`, { method: 'DELETE' });
+            carregarLocais();
+        } catch (erro) {
+            console.error('Erro ao excluir local:', erro);
+        }
+        fecharModalExclusao();
     }
 }
 
-function editarLocal(id) {
-    fetch(`${apiUrl}/${id}`)
-        .then(response => response.json())
-        .then(local => {
-            document.getElementById('modal').style.display = 'flex';
-            document.getElementById('modalTitulo').innerText = 'Editar Local';
-            document.getElementById('localId').value = local.id;
-            document.getElementById('titulo').value = local.titulo;
-            document.getElementById('descricao').value = local.descricao;
-            document.getElementById('foto').value = local.foto;
-        });
-}
-function exibirLocais(locais) {
-    const container = document.getElementById('listaLocais');
-    container.innerHTML = '';
-    
-    locais.forEach(local => {
-        const div = document.createElement('div');
-        div.classList.add('local-item');
-        div.innerHTML = `
-            <h2>${local.titulo}</h2>
-            <p>${local.descricao}</p>
-            <img src="${local.foto}" alt="Imagem de ${local.titulo}" width="200">
-            <button class="editar" data-id="${local.id}">Editar</button>
-            <button class="excluir" data-id="${local.id}">Excluir</button>
-        `;
-        container.appendChild(div);
-    });
-
-    // Adicionando eventos para os botões
-    document.querySelectorAll('.editar').forEach(button => {
-        button.addEventListener('click', function() {
-            editarLocal(this.getAttribute('data-id'));
-        });
-    });
-    document.querySelectorAll('.excluir').forEach(button => {
-        button.addEventListener('click', function() {
-            excluirLocal(this.getAttribute('data-id'));
-        });
-    });
-}
 function editarLocal(id) {
     fetch(`${apiUrl}/${id}`)
         .then(response => response.json())
@@ -147,14 +136,4 @@ function editarLocal(id) {
         .catch(erro => {
             console.error('Erro ao buscar local para edição:', erro);
         });
-}
-async function excluirLocal(id) {
-    if (!confirm('Tem certeza que deseja excluir este local?')) return;
-
-    try {
-        await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
-        carregarLocais(); // Recarregar os locais após exclusão
-    } catch (erro) {
-        console.error('Erro ao excluir local:', erro);
-    }
 }
