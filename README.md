@@ -30,7 +30,7 @@ A aplicação foi construída utilizando as tecnologias:
 3. Para executar a aplicação localmente e testar a API, você pode utilizar o **JSON Server**:
     ```bash
     npm install -g json-server
-    json-server --watch db.json --port 3000
+    json-server --watch locais.json --port 3000
     ```
 4. O site estará disponível em `http://localhost:3000`.
 
