@@ -1,0 +1,17 @@
+{
+    "locais": [
+      {
+        "id": 1,
+        "titulo": "Praia de Tambaba",
+        "descricao": "Uma bela praia naturista localizada no litoral sul da Paraíba.",
+        "foto": "https://example.com/tambaba.jpg"
+      },
+      {
+        "id": 2,
+        "titulo": "Lajedo de Pai Mateus",
+        "descricao": "Formação rochosa incrível no sertão da Paraíba.",
+        "foto": "https://example.com/lajedo.jpg"
+      }
+    ]
+  }
+  
